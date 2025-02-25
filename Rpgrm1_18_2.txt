@@ -76,4 +76,4 @@ mysql> desc EMPLOYEE_D;
 | adhar_no | varchar(20) | YES  |     | NULL    |       |
 +----------+-------------+------+-----+---------+-------+
 
-
+//VERIFIED
