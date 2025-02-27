@@ -191,3 +191,5 @@
    DROP TABLE STUDENT;
    Query OK, 0 rows affected (0.01 sec)
 
+//RESUBMIT
+INVOICE_ITEM HAVE PK??
