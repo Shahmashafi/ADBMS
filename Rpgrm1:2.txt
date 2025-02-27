@@ -1,0 +1,171 @@
+5_ Create an INVOICE database and having following tables.
+  create database invoice;
+  use invoice;
+  Database changed
+
+  A)Customer(id, name, address, city, ph_no) 
+  create table Customer(id int primary key, name varchar(20),address varchar(20), city varchar(20),ph_no varchar(20));
+  desc Customer;
+  +---------+-------------+------+-----+---------+-------+
+  | Field   | Type        | Null | Key | Default | Extra |
+  +---------+-------------+------+-----+---------+-------+
+  | id      | int         | NO   | PRI | NULL    |       |
+  | name    | varchar(20) | YES  |     | NULL    |       |
+  | address | varchar(20) | YES  |     | NULL    |       |
+  | city    | varchar(20) | YES  |     | NULL    |       |
+  | ph_no   | varchar(20) | YES  |     | NULL    |       |
+  +---------+-------------+------+-----+---------+-------+
+
+  B)Product(pid,  pname, price (default 0))
+  create table Product(p_id int primary key,pname varchar(20),price int default 0);
+  desc Product;
+  +-------+-------------+------+-----+---------+-------+
+  | Field | Type        | Null | Key | Default | Extra |
+  +-------+-------------+------+-----+---------+-------+
+  | p_id  | int         | NO   | PRI | NULL    |       |
+  | pname | varchar(20) | YES  |     | NULL    |       |
+  | price | int         | YES  |     | 0       |       |
+  +-------+-------------+------+-----+---------+-------+
+
+  C) Invoice_master(inv_id, cust_id(FK), inv_date)
+  create table invoice_master(inv_id int primary key,c_id int, inv_date date, foreign key (c_id) references Customer(id));
+   desc  invoice_master;
+  +----------+------+------+-----+---------+-------+
+  | Field    | Type | Null | Key | Default | Extra |
+  +----------+------+------+-----+---------+-------+
+  | inv_id   | int  | NO   | PRI | NULL    |       |
+  | c_id     | int  | YES  | MUL | NULL    |       |
+  | inv_date | date | YES  |     | NULL    |       |
+  +----------+------+------+-----+---------+-------+
+  
+  D) Invoice_item(inv_id (FK),  pid(FK), quantity)
+  create  table invoice_item(inv_id int,foreign key (inv_id) references invoice_master(inv_id),p_id int,foreign key(p_id) references Product(p_id),quality int);
+  Query OK, 0 rows affected (0.02 sec)
+   desc invoice_item;
+  +---------+------+------+-----+---------+-------+
+  | Field   | Type | Null | Key | Default | Extra |
+  +---------+------+------+-----+---------+-------+
+  | inv_id  | int  | YES  | MUL | NULL    |       |
+  | p_id    | int  | YES  | MUL | NULL    |       |
+  | quality | int  | YES  |     | NULL    |       |
+  +---------+------+------+-----+---------+-------+
+  3 rows in set (0.01 sec)
+
+
+  **DDL-ALTER & DROP**
+
+    1. Add a column ‘SSN’ at the first position in the table EMPLOYEE
+    desc EMPLOYEE;
+  +----------+-------------+------+-----+---------+-------+
+  | Field    | Type        | Null | Key | Default | Extra |
+  +----------+-------------+------+-----+---------+-------+
+  | emp_id   | int         | YES  |     | NULL    |       |
+  | Name     | varchar(20) | YES  |     | NULL    |       |
+  | city     | varchar(10) | YES  |     | NULL    |       |
+  | dob      | date        | YES  |     | NULL    |       |
+  | adhar_no | varchar(20) | YES  |     | NULL    |       |
+  +----------+-------------+------+-----+---------+-------+
+   6 rows in set (0.00 sec)
+
+  alter table EMPLOYEE add SNN int first;
+  Query OK, 0 rows affected (0.02 sec)
+  Records: 0  Duplicates: 0  Warnings: 0
+
+  desc EMPLOYEE;
+  +----------+-------------+------+-----+---------+-------+
+  | Field    | Type        | Null | Key | Default | Extra |
+  +----------+-------------+------+-----+---------+-------+
+  | SNN      | varchar(20) | YES  |     | NULL    |       |
+  | emp_id   | int         | YES  |     | NULL    |       |
+  | Name     | varchar(20) | YES  |     | NULL    |       |
+  | city     | varchar(10) | YES  |     | NULL    |       |
+  | dob      | date        | YES  |     | NULL    |       |
+  | adhar_no | varchar(20) | YES  |     | NULL    |       |
+  +----------+-------------+------+-----+---------+-------+
+  6 rows in set (0.00 sec)
+
+
+   2. Change the data type of the column ‘DOB’  in year the table EMPLOYEE    
+      alter table EMPLOYEE modify dob year;
+      Query OK, 0 rows affected (0.02 sec)
+      Records: 0  Duplicates: 0  Warnings: 0
+   desc EMPLOYEE;
+  +----------+-------------+------+-----+---------+-------+
+  | Field    | Type        | Null | Key | Default | Extra |
+  +----------+-------------+------+-----+---------+-------+
+  | SNN      | varchar(20) | YES  |     | NULL    |       |
+  | emp_id   | int         | YES  |     | NULL    |       |
+  | Name     | varchar(20) | YES  |     | NULL    |       |
+  | city     | varchar(10) | YES  |     | NULL    |       |
+  | dob      | year        | YES  |     | NULL    |       |
+  | adhar_no | varchar(20) | YES  |     | NULL    |       |
+  +----------+-------------+------+-----+---------+-------+
+   6 rows in set (0.00 sec)
+
+   3. Delete the column ‘emp_id’ the table EMPLOYEE.
+      alter table EMPLOYEE drop emp_id; 
+      Query OK, 0 rows affected (0.02 sec)
+      Records: 0  Duplicates: 0  Warnings: 0
+  desc EMPLOYEE;
+  +----------+-------------+------+-----+---------+-------+
+  | Field    | Type        | Null | Key | Default | Extra |
+  +----------+-------------+------+-----+---------+-------+
+  | SNN      | varchar(20) | YES  |     | NULL    |       |
+  | Name     | varchar(20) | YES  |     | NULL    |       |
+  | city     | varchar(10) | YES  |     | NULL    |       |
+  | dob      | year        | YES  |     | NULL    |       |
+  | adhar_no | varchar(20) | YES  |     | NULL    |       |
+  +----------+-------------+------+-----+---------+-------+
+  5 rows in set (0.00 sec)
+ 
+   4. Add  the constraint unique for columns ‘SSN, ‘adhar_no’ the table EMPLOYEE
+   alter table EMPLOYEE add constraint snn_adhar unique(SNN,adhar_no) ;
+   Query OK, 0 rows affected (0.01 sec)
+   Records: 0  Duplicates: 0  Warnings: 0
+  desc EMPLOYEE;
+  +----------+-------------+------+-----+---------+-------+
+  | Field    | Type        | Null | Key | Default | Extra |
+  +----------+-------------+------+-----+---------+-------+
+  | SNN      | varchar(20) | YES  | MUL | NULL    |       |
+  | Name     | varchar(20) | YES  |     | NULL    |       |
+  | city     | varchar(10) | YES  |     | NULL    |       |
+  | dob      | year        | YES  |     | NULL    |       |
+  | adhar_no | varchar(20) | YES  |     | NULL    |       |
+  +----------+-------------+------+-----+---------+-------+
+  5 rows in set (0.00 sec)
+
+   5. Delete the NULL constraint of ‘age’ in the STUDENT table.
+   alter table STUDENT modify column age int null;
+   Query OK, 0 rows affected (0.03 sec)
+   Records: 0  Duplicates: 0  Warnings: 0
+
+  desc STUDENT;
+  +-------------+-------------+------+-----+---------+-------+
+  | Field       | Type        | Null | Key | Default | Extra |
+  +-------------+-------------+------+-----+---------+-------+
+  | roll_number | int         | NO   | PRI | NULL    |       |
+  | Name        | varchar(20) | NO   |     | NULL    |       |
+  | age         | int         | YES  |     | NULL    |       |
+  | address     | varchar(20) | YES  |     | NULL    |       |
+  | gender      | char(1)     | YES  |     | m       |       |
+  +-------------+-------------+------+-----+---------+-------+
+  5 rows in set (0.00 sec)
+
+   6. Change the table name EMPLOYEE as PERSON
+   alter table EMPLOYEE rename to PERSON;
+   DESC PERSON;
+  +----------+-------------+------+-----+---------+-------+
+  | Field    | Type        | Null | Key | Default | Extra |
+  +----------+-------------+------+-----+---------+-------+
+  | SNN      | varchar(20) | YES  | MUL | NULL    |       |
+  | Name     | varchar(20) | YES  |     | NULL    |       |
+  | city     | varchar(10) | YES  |     | NULL    |       |
+  | dob      | year        | YES  |     | NULL    |       |
+  | adhar_no | varchar(20) | YES  |     | NULL    |       |
+  +----------+-------------+------+-----+---------+-------+
+  Query OK, 0 rows affected (0.01 sec)
+
+   7. Delete the table STUDENT1.
+   DROP TABLE STUDENT;
+   Query OK, 0 rows affected (0.01 sec)
+
