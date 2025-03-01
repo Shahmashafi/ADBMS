@@ -1,0 +1,252 @@
+insert into Customer values(10001,'SHAHMA','PARAMMEL HOUSE','KZD',9846561072),(10002,'BINEESHA','POONGATTAYIL HOUSE','VKD',9033666042),(10003,'MASOOD','TARAYILL HOUSE','EKM',9234541074);
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+insert into Customer(id,name,address,city) values(10004,'AYISHA','ATHANNI HOUSE','EKM'),(10005,'IZZAH','TARAMMAL HOUSE','TVM') ;
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+select*from Customer;
++-------+----------+--------------------+------+------------+
+| id    | name     | address            | city | ph_no      |
++-------+----------+--------------------+------+------------+
+| 10001 | SHAHMA   | PARAMMEL HOUSE     | KZD  | 9846561072 |
+| 10002 | BINEESHA | POONGATTAYIL HOUSE | VKD  | 9033666042 |
+| 10003 | MASOOD   | TARAYILL HOUSE     | EKM  | 9234541074 |
+| 10004 | AYISHA   | ATHANNI HOUSE      | EKM  | NULL       |
+| 10005 | IZZAH    | TARAMMAL HOUSE     | TVM  | NULL       |
++-------+----------+--------------------+------+------------+
+5 rows in set (0.00 sec)
+
+
+insert into Product VALUES(101,10001,20011030),(102,10002,20250227),(103,10003,20230512),(104,10004,20070928),(105,10005,20210625);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+select*from Product;
++------+--------+-------+
+| p_id | pname  | price |
++------+--------+-------+
+|  101 | pen    |    92 |
+|  102 | pencil |    52 |
+|  103 | book   |    82 |
+|  104 | glue   |   102 |
+|  105 | soap   |   132 |
++------+--------+-------+
+5 rows in set (0.00 sec)
+
+
+
+insert into invoice_master VALUES(11,10001,20011030),(12,10002,20250227),(13,10003,20230512),(14,10004,20070928),(15,10005,20210625);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select*from invoice_master;
++--------+-------+------------+
+| inv_id | c_id  | inv_date   |
++--------+-------+------------+
+|     11 | 10001 | 2001-10-30 |
+|     12 | 10002 | 2025-02-27 |
+|     13 | 10003 | 2023-05-12 |
+|     14 | 10004 | 2007-09-28 |
+|     15 | 10005 | 2021-06-25 |
++--------+-------+------------+
+5 rows in set (0.00 sec)
+
+
+
+insert into invoice_item VALUES(11,101,1),(12,102,6),(13,103,1),(14,104,2),(15,105,7);
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select*from invoice_item;
++--------+------+---------+
+| inv_id | p_id | quality |
++--------+------+---------+
+|     11 |  101 |       1 |
+|     12 |  102 |       6 |
+|     13 |  103 |       1 |
+|     14 |  104 |       2 |
+|     15 |  105 |       7 |
++--------+------+---------+
+5 rows in set (0.00 sec)
+
+1.Update the price of a particular product. 
+update Product set price=140 where p_id=105;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from Product;
++------+--------+-------+
+| p_id | pname  | price |
++------+--------+-------+
+|  101 | pen    |    92 |
+|  102 | pencil |    52 |
+|  103 | book   |    82 |
+|  104 | glue   |   102 |
+|  105 | soap   |   140 |
++------+--------+-------+
+5 rows in set (0.00 sec)
+
+
+ 2. Change the name of city ‘calicut’ to ‘kozhikode’ in the customer table. 
+mysql> update Customer set city="calicut" where id=10001;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from Customer;
++-------+----------+--------------------+---------+------------+
+| id    | name     | address            | city    | ph_no      |
++-------+----------+--------------------+---------+------------+
+| 10001 | SHAHMA   | PARAMMEL HOUSE     | calicut | 9846561072 |
+| 10002 | BINEESHA | POONGATTAYIL HOUSE | VKD     | 9033666042 |
+| 10003 | MASOOD   | TARAYILL HOUSE     | EKM     | 9234541074 |
+| 10004 | AYISHA   | ATHANNI HOUSE      | EKM     | NULL       |
+| 10005 | IZZAH    | TARAMMAL HOUSE     | TVM     | NULL       |
++-------+----------+--------------------+---------+------------+
+5 rows in set (0.00 sec)
+
+  3. Update all prices with 2% of its original price. 
+update Product set price=price+(price*2/100);
+Query OK, 5 rows affected (0.00 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select*from Product;
++------+--------+-------+
+| p_id | pname  | price |
++------+--------+-------+
+|  101 | pen    |    94 |
+|  102 | pencil |    53 |
+|  103 | book   |    84 |
+|  104 | glue   |   104 |
+|  105 | soap   |   143 |
++------+--------+-------+
+5 rows in set (0.01 sec)
+
+ 4. Change the address, city, phone number of a particular customer. 
+update Customer set address="rose villa",city="kannur",ph_no=9876754345 where id=10002;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from Customer;
++-------+----------+----------------+---------+------------+
+| id    | name     | address        | city    | ph_no      |
++-------+----------+----------------+---------+------------+
+| 10001 | SHAHMA   | PARAMMEL HOUSE | calicut | 9846561072 |
+| 10002 | BINEESHA | rose villa     | kannur  | 9876754345 |
+| 10003 | MASOOD   | TARAYILL HOUSE | EKM     | 9234541074 |
+| 10004 | AYISHA   | ATHANNI HOUSE  | EKM     | NULL       |
+| 10005 | IZZAH    | TARAMMAL HOUSE | TVM     | NULL       |
++-------+----------+----------------+---------+------------+
+5 rows in set (0.01 sec)
+
+
+  5. Change the quantity of a purchased product of inv_id ‘101’
+update invoice_item set quality=5 where inv_id=11;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from invoice_item;
++--------+------+---------+
+| inv_id | p_id | quality |
++--------+------+---------+
+|     11 |  101 |       5 |
+|     12 |  102 |       6 |
+|     13 |  103 |       1 |
+|     14 |  104 |       2 |
+|     15 |  105 |       7 |
++--------+------+---------+
+5 rows in set (0.00 sec)
+
+ DML - DELETE 
+
+ 1. Delete the record of customer id ‘10001’.
+set foreign_key_checks=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from Customer where id=10001;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from Customer;
++-------+----------+----------------+--------+------------+
+| id    | name     | address        | city   | ph_no      |
++-------+----------+----------------+--------+------------+
+| 10002 | BINEESHA | rose villa     | kannur | 9876754345 |
+| 10003 | MASOOD   | TARAYILL HOUSE | EKM    | 9234541074 |
+| 10004 | AYISHA   | ATHANNI HOUSE  | EKM    | NULL       |
+| 10005 | IZZAH    | TARAMMAL HOUSE | TVM    | NULL       |
++-------+----------+----------------+--------+------------+
+4 rows in set (0.00 sec)
+
+2. Delete all purchase details of items its quantity less than 2. 
+delete from invoice_item where quality<2;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from invoice_item;
++--------+------+---------+
+| inv_id | p_id | quality |
++--------+------+---------+
+|     11 |  101 |       5 |
+|     12 |  102 |       6 |
+|     14 |  104 |       2 |
+|     15 |  105 |       7 |
++--------+------+---------+
+4 rows in set (0.00 sec)
+
+
+ 3. Delete the purchase details of product ‘pen’ in the in_id ‘101’.
+delete from invoice_item where inv_id=11 and p_id=101;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from invoice_item;
++--------+------+---------+
+| inv_id | p_id | quality |
++--------+------+---------+
+|     12 |  102 |       6 |
+|     14 |  104 |       2 |
+|     15 |  105 |       7 |
++--------+------+---------+
+3 rows in set (0.00 sec)
+
+
+4. Delete details of employees who does not have phone number. 
+delete from Customer where ph_no="null";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from Customer;
++-------+----------+----------------+--------+------------+
+| id    | name     | address        | city   | ph_no      |
++-------+----------+----------------+--------+------------+
+| 10002 | BINEESHA | rose villa     | kannur | 9876754345 |
+| 10003 | MASOOD   | TARAYILL HOUSE | EKM    | 9234541074 |
+| 10004 | AYISHA   | ATHANNI HOUSE  | EKM    | NULL       |
+| 10005 | IZZAH    | TARAMMAL HOUSE | TVM    | NULL       |
++-------+----------+----------------+--------+------------+
+4 rows in set (0.00 sec)
+
+5. Delete Invoice details of a particular customer(name) 
+delete from invoice_master where c_id in(select id from Customer where name="IZZAH");
+Query OK, 1 row affected (0.00 sec)
+
+select*from invoice_master;
++--------+-------+------------+
+| inv_id | c_id  | inv_date   |
++--------+-------+------------+
+|     11 | 10001 | 2001-10-30 |
+|     12 | 10002 | 2025-02-27 |
+|     13 | 10003 | 2023-05-12 |
+|     14 | 10004 | 2007-09-28 |
++--------+-------+------------+
+4 rows in set (0.00 sec)
+
+6. Delete the first two records of INVOICE_ITEM table its purchase quantity is high.
+delete from invoice_item order by quality desc limit 2;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select*from invoice_item;
++--------+------+---------+
+| inv_id | p_id | quality |
++--------+------+---------+
+|     14 |  104 |       2 |
++--------+------+---------+
+1 row in set (0.00 sec)
+
