@@ -222,9 +222,10 @@ mysql> select*from Customer;
 Query OK, 2 rows affected (0.00 sec)
 
 5. Delete Invoice details of a particular customer(name) 
-delete from invoice_master where c_id in(select id from Customer where name="IZZAH");
-Query OK, 1 row affected (0.00 sec)
+delete from invoice_item where inv_id=14;
+empty set (0.00 sec)
 
+delete from invoice_master where inv_id=14;
 select*from invoice_master;
 +--------+-------+------------+
 | inv_id | c_id  | inv_date   |
@@ -232,9 +233,8 @@ select*from invoice_master;
 |     11 | 10001 | 2001-10-30 |
 |     12 | 10002 | 2025-02-27 |
 |     13 | 10003 | 2023-05-12 |
-|     14 | 10004 | 2007-09-28 |
 +--------+-------+------------+
-4 rows in set (0.00 sec)
+3 rows in set (0.00 sec)
 
 6. Delete the first two records of INVOICE_ITEM table its purchase quantity is high.
 delete from invoice_item order by quality desc limit 2;
