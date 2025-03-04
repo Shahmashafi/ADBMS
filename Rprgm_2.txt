@@ -209,8 +209,8 @@ mysql> select*from invoice_item;
 
 
 4. Delete details of employees who does not have phone number. 
-delete from Customer where ph_no="null";
-Query OK, 0 rows affected (0.00 sec)
+DELETE FROM Customer WHERE ph_no IS NULL;
+Query OK, 2 rows affected (0.00 sec)
 
 mysql> select*from Customer;
 +-------+----------+----------------+--------+------------+
@@ -218,10 +218,8 @@ mysql> select*from Customer;
 +-------+----------+----------------+--------+------------+
 | 10002 | BINEESHA | rose villa     | kannur | 9876754345 |
 | 10003 | MASOOD   | TARAYILL HOUSE | EKM    | 9234541074 |
-| 10004 | AYISHA   | ATHANNI HOUSE  | EKM    | NULL       |
-| 10005 | IZZAH    | TARAMMAL HOUSE | TVM    | NULL       |
 +-------+----------+----------------+--------+------------+
-4 rows in set (0.00 sec)
+Query OK, 2 rows affected (0.00 sec)
 
 5. Delete Invoice details of a particular customer(name) 
 delete from invoice_master where c_id in(select id from Customer where name="IZZAH");
