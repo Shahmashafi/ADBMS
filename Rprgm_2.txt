@@ -54,9 +54,9 @@ mysql> select*from invoice_master;
 
 
 
-insert into invoice_item VALUES(11,101,1),(12,102,6),(13,103,1),(14,104,2),(15,105,7);
-Query OK, 5 rows affected (0.00 sec)
-Records: 5  Duplicates: 0  Warnings: 0
+insert into invoice_item VALUES(11,101,1),(12,102,6),(13,103,1),(14,104,2),(15,105,7)(12,102,1),(12,104,5);
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
 
 mysql> select*from invoice_item;
 +--------+------+---------+
@@ -67,8 +67,10 @@ mysql> select*from invoice_item;
 |     13 |  103 |       1 |
 |     14 |  104 |       2 |
 |     15 |  105 |       7 |
+|     12 |  102 |       1 |
+|     12 |  104 |       5 |
 +--------+------+---------+
-5 rows in set (0.00 sec)
+7 rows in set (0.00 sec)
 
 1.Update the price of a particular product. 
 update Product set price=140 where p_id=105;
@@ -154,8 +156,10 @@ mysql> select*from invoice_item;
 |     13 |  103 |       1 |
 |     14 |  104 |       2 |
 |     15 |  105 |       7 |
+|     12 |  102 |       1 |
+|     12 |  104 |       5 |
 +--------+------+---------+
-5 rows in set (0.00 sec)
+7 rows in set (0.00 sec)
 
  DML - DELETE 
 
@@ -179,7 +183,7 @@ mysql> select*from Customer;
 
 2. Delete all purchase details of items its quantity less than 2. 
 delete from invoice_item where quality<2;
-Query OK, 1 row affected (0.00 sec)
+Query OK, 2 row affected (0.00 sec)
 
 mysql> select*from invoice_item;
 +--------+------+---------+
@@ -189,8 +193,9 @@ mysql> select*from invoice_item;
 |     12 |  102 |       6 |
 |     14 |  104 |       2 |
 |     15 |  105 |       7 |
+|     12 |  104 |       5 |
 +--------+------+---------+
-4 rows in set (0.00 sec)
+5 rows in set (0.00 sec)
 
 
  3. Delete the purchase details of product ‘pen’ in the in_id ‘101’.
@@ -204,8 +209,9 @@ mysql> select*from invoice_item;
 |     12 |  102 |       6 |
 |     14 |  104 |       2 |
 |     15 |  105 |       7 |
+|     12 |  104 |       5 |
 +--------+------+---------+
-3 rows in set (0.00 sec)
+4 rows in set (0.00 sec)
 
 
 4. Delete details of employees who does not have phone number. 
@@ -223,7 +229,16 @@ Query OK, 2 rows affected (0.00 sec)
 
 5. Delete Invoice details of a particular customer(name) 
 delete from invoice_item where inv_id=14;
-empty set (0.00 sec)
+Query OK, 1 rows affected (0.01 sec)
+mysql> select*from invoice_item;
++--------+------+---------+
+| inv_id | p_id | quality |
++--------+------+---------+
+|     12 |  102 |       6 |
+|     15 |  105 |       7 |
+|     12 |  104 |       5 |
++--------+------+---------+
+3 rows in set (0.00 sec)
 
 delete from invoice_master where inv_id=14;
 select*from invoice_master;
@@ -244,7 +259,7 @@ mysql> select*from invoice_item;
 +--------+------+---------+
 | inv_id | p_id | quality |
 +--------+------+---------+
-|     14 |  104 |       2 |
+|     12 |  104 |       5 |
 +--------+------+---------+
 1 row in set (0.00 sec)
 
