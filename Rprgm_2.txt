@@ -17,7 +17,7 @@ select*from Customer;
 5 rows in set (0.00 sec)
 
 
-insert into Product VALUES(101,10001,20011030),(102,10002,20250227),(103,10003,20230512),(104,10004,20070928),(105,10005,20210625);
+insert into Product VALUES(101,'pen',92),(102,'pencil',52),(103,'book',82),(104,'glue',102),(105,'soap',132);
 Query OK, 5 rows affected (0.00 sec)
 Records: 5  Duplicates: 0  Warnings: 0
 
