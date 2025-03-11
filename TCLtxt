@@ -1,0 +1,124 @@
+                                                        COMMIT     ROLLBACK     SAVEPOINT
+**COMMIT**
+mysql>set autocommit=off;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select*from  EMPLOYEE;
++------+---------+------+------+--------------+
+| SNN  | Name    | city | dob  | adhar_no     |
++------+---------+------+------+--------------+
+| 1    | shahma  | TKM  | 2002 | 231452678478 |
+| 2    | naveena | VKD  | 2003 | 231752678238 |
+| 3    | bareera | CLT  | 2001 | 23175435678  |
+| 4    | basith  | ekm  | 2000 | 75435465678  |
+| 5    | rahees  | VKD  | 2023 | 12335465678  |
++------+---------+------+------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into EMPLOYEE values(6,'yasin','KZD',2001,871234567898);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from  EMPLOYEE;
++------+---------+------+------+--------------+
+| SNN  | Name    | city | dob  | adhar_no     |
++------+---------+------+------+--------------+
+| 1    | shahma  | TKM  | 2002 | 231452678478 |
+| 2    | naveena | VKD  | 2003 | 231752678238 |
+| 3    | bareera | CLT  | 2001 | 23175435678  |
+| 4    | basith  | ekm  | 2000 | 75435465678  |
+| 5    | rahees  | VKD  | 2023 | 12335465678  |
+| 6    | yasin   | KZD  | 2001 | 871234567898 |
++------+---------+------+------+--------------+
+6 rows in set (0.00 sec)
+
+**ROLLBACK**
+mysql> set autocommit=off;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delete from EMPLOYEE where city='CLT';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select*from  EMPLOYEE;
++------+---------+------+------+--------------+
+| SNN  | Name    | city | dob  | adhar_no     |
++------+---------+------+------+--------------+
+| 1    | shahma  | TKM  | 2002 | 231452678478 |
+| 2    | naveena | VKD  | 2003 | 231752678238 |
+| 4    | basith  | ekm  | 2000 | 75435465678  |
+| 5    | rahees  | VKD  | 2023 | 12335465678  |
+| 6    | yasin   | KZD  | 2001 | 871234567898 |
++------+---------+------+------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select*from  EMPLOYEE;
++------+---------+------+------+--------------+
+| SNN  | Name    | city | dob  | adhar_no     |
++------+---------+------+------+--------------+
+| 1    | shahma  | TKM  | 2002 | 231452678478 |
+| 2    | naveena | VKD  | 2003 | 231752678238 |
+| 3    | bareera | CLT  | 2001 | 23175435678  |
+| 4    | basith  | ekm  | 2000 | 75435465678  |
+| 5    | rahees  | VKD  | 2023 | 12335465678  |
+| 6    | yasin   | KZD  | 2001 | 871234567898 |
++------+---------+------+------+--------------+
+6 rows in set (0.00 sec)
+
+**SAVEPOINT**
+mysql> insert into EMPLOYEE values(7,'MASOOD','EKM',2004,871723567898);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into EMPLOYEE values(8,'ayisha','KANNUR',2005,921723567898);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into EMPLOYEE values(9,'izzah','MLP',2010,192745067898);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint s3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from  EMPLOYEE;
++------+---------+--------+------+--------------+
+| SNN  | Name    | city   | dob  | adhar_no     |
++------+---------+--------+------+--------------+
+| 1    | shahma  | TKM    | 2002 | 231452678478 |
+| 2    | naveena | VKD    | 2003 | 231752678238 |
+| 3    | bareera | CLT    | 2001 | 23175435678  |
+| 4    | basith  | ekm    | 2000 | 75435465678  |
+| 5    | rahees  | VKD    | 2023 | 12335465678  |
+| 6    | yasin   | KZD    | 2001 | 871234567898 |
+| 7    | MASOOD  | EKM    | 2004 | 871723567898 |
+| 8    | ayisha  | KANNUR | 2005 | 921723567898 |
+| 9    | izzah   | MLP    | 2010 | 192745067898 |
++------+---------+--------+------+--------------+
+9 rows in set (0.00 sec)
+
+mysql> rollback to s2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select*from  EMPLOYEE;
++------+---------+--------+------+--------------+
+| SNN  | Name    | city   | dob  | adhar_no     |
++------+---------+--------+------+--------------+
+| 1    | shahma  | TKM    | 2002 | 231452678478 |
+| 2    | naveena | VKD    | 2003 | 231752678238 |
+| 3    | bareera | CLT    | 2001 | 23175435678  |
+| 4    | basith  | ekm    | 2000 | 75435465678  |
+| 5    | rahees  | VKD    | 2023 | 12335465678  |
+| 6    | yasin   | KZD    | 2001 | 871234567898 |
+| 7    | MASOOD  | EKM    | 2004 | 871723567898 |
+| 8    | ayisha  | KANNUR | 2005 | 921723567898 |
++------+---------+--------+------+--------------+
+8 rows in set (0.00 sec)
+
