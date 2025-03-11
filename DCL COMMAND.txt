@@ -43,3 +43,11 @@ Remove delete privilege of user 2.
 mysql> revoke delete on invoice.* from 'user2@localhost';
 Query OK, 0 rows affected (0.00 sec)
 
+mysql> show grants for 'user2@localhost';
++--------------------------------------------------------------+
+| Grants for user2@localhost@%                                 |
++--------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `user2@localhost`@`%`                  |
+| GRANT UPDATE ON `invoice`.* TO `user2@localhost`@`%` |
++--------------------------------------------------------------+
+2 rows in set (0.00 sec)
