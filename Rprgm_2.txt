@@ -251,7 +251,7 @@ select*from invoice_master;
 +--------+-------+------------+
 3 rows in set (0.00 sec)
 
-6. Delete the first two records of INVOICE_ITEM table its purchase quantity is high.
+6. Delete the first two records of INVOICE_ITEM table 
 delete from invoice_item order by quality desc limit 2;
 Query OK, 2 rows affected (0.00 sec)
 
@@ -264,3 +264,4 @@ mysql> select*from invoice_item;
 1 row in set (0.00 sec)
 
 //NEED TO ADD MORE DETAILS IN INVOICE ITEM TABLE-
+//VERIFIED
