@@ -79,7 +79,6 @@ mysql> SELECT * FROM Customer WHERE ph_no IS NULL;
 
 5. Display customer names in descending order. 
 mysql> select name from Customer order by name desc;
-mysql> select name from Customer order by name desc;
 +----------+
 | name     |
 +----------+
@@ -116,9 +115,9 @@ mysql> select name, city, address from Customer order by city asc, name desc;
 10 rows in set (0.01 sec)
 
 
-7. Find the customer names who have ‘e’ or ‘a’ in them and at least 3 characters in length
+7. Find the customer names who have ‘E’ or ‘A’ in them and at least 3 characters in length
 mysql> select name FROM Customer where (name like '%E%' OR name LIKE '%A%') and length(name) >= 3;
-mysql> select name FROM Customer where (name like '%E%' OR name LIKE '%A%') and length(name) >= 3;
+
 +----------+
 | name     |
 +----------+
@@ -135,7 +134,7 @@ mysql> select name FROM Customer where (name like '%E%' OR name LIKE '%A%') and 
 9 rows in set (0.00 sec)
 
 
-8. List the names of customers their names have ‘r’ in second position.
+8. List the names of customers their names have ‘R’ in second position.
 mysql> select name from Customer where name like '_R%';
 +------+
 | name |
@@ -181,7 +180,6 @@ mysql> select min(price) as min_price, max(price) as max_price,avg(price) as avg
 1 row in set (0.01 sec)
 
 3.    Find number of customers in each city.
-mysql> select city,count(id) as num_cus from Customer group by city;
 mysql> select city,count(id) as num_cus from Customer group by city;
 +----------+---------+
 | city     | num_cus |
