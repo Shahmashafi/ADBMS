@@ -1,0 +1,228 @@
+a) ACCESSING DATABASE:  (SELECT, Filtering using WHERE, ORDER BY Clauses)
+
+1. List all invoice items, avoid duplicates. 
+
+mysql> select * from invoice_item;
++--------+------+---------+
+| inv_id | p_id | quality |
++--------+------+---------+
+|     13 |  105 |       8 |
+|     12 |  102 |       7 |
+|     11 |  102 |       8 |
+|     12 |  104 |       5 |
++--------+------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select distinct p_id from invoice_item;
++------+
+| p_id |
++------+
+|  102 |
+|  104 |
+|  105 |
++------+
+3 rows in set (0.00 sec)
+
+2.List the invoice details from 1st January 2021 to 31st march 2025 
+mysql> select * from invoice_master where inv_date between '2021-01-01' and '2025-03-31';
++--------+-------+------------+
+| inv_id | c_id  | inv_date   |
++--------+-------+------------+
+|     12 | 10002 | 2025-02-27 |
+|     13 | 10003 | 2023-05-12 |
++--------+-------+------------+
+2 rows in set (0.00 sec)
+
+3. List the customer details who not live in ‘tvm’.
+mysql>  SELECT * FROM Customer;
++-------+----------+-----------------+----------+------------+
+| id    | name     | address         | city     | ph_no      |
++-------+----------+-----------------+----------+------------+
+| 10001 | SHAHMA   | PARAMMEL HOUSE  | KZD      | 9846561072 |
+| 10002 | BINEESHA | rose villa      | kannur   | 9876754345 |
+| 10003 | MASOOD   | TARAYILL HOUSE  | EKM      | 9234541074 |
+| 10004 | IZZAH    | MANURAYIL HOUSE | TVM      | 9236561072 |
+| 10005 | AYISHA   | ATHANNI HOUSE   | THRISSUR | NULL       |
+| 10006 | HAMNNA   | TARAMMAL HOUSE  | TVM      | NULL       |
+| 10007 | CHARLIE  | BOUGAINVILLEA   | UK       | 8712561072 |
+| 10008 | ARON     | HEAVEN          | USA      | 9546120076 |
+| 10009 | ALICE    | SWEET HOME      | TVM      | 8965430076 |
+| 10010 | BOB      | GREAT TREAT     | TVM      | 9076342516 |
++-------+----------+-----------------+----------+------------+
+10 rows in set (0.00 sec)
+
+
+
+mysql>  SELECT * FROM Customer WHERE city != 'tvm';
++-------+----------+----------------+----------+------------+
+| id    | name     | address        | city     | ph_no      |
++-------+----------+----------------+----------+------------+
+| 10001 | SHAHMA   | PARAMMEL HOUSE | KZD      | 9846561072 |
+| 10002 | BINEESHA | rose villa     | kannur   | 9876754345 |
+| 10003 | MASOOD   | TARAYILL HOUSE | EKM      | 9234541074 |
+| 10005 | AYISHA   | ATHANNI HOUSE  | THRISSUR | NULL       |
+| 10007 | CHARLIE  | BOUGAINVILLEA  | UK       | 8712561072 |
+| 10008 | ARON     | HEAVEN         | USA      | 9546120076 |
++-------+----------+----------------+----------+------------+
+6 rows in set (0.00 sec)
+
+
+4. List the customers who have no phone number. 
+mysql> SELECT * FROM Customer WHERE ph_no IS NULL;
++-------+--------+----------------+----------+-------+
+| id    | name   | address        | city     | ph_no |
++-------+--------+----------------+----------+-------+
+| 10005 | AYISHA | ATHANNI HOUSE  | THRISSUR | NULL  |
+| 10006 | HAMNNA | TARAMMAL HOUSE | TVM      | NULL  |
++-------+--------+----------------+----------+-------+
+2 rows in set (0.00 sec)
+
+5. Display customer names in descending order. 
+mysql> select name from Customer order by name desc;
+mysql> select name from Customer order by name desc;
++----------+
+| name     |
++----------+
+| SHAHMA   |
+| MASOOD   |
+| IZZAH    |
+| HAMNNA   |
+| CHARLIE  |
+| BOB      |
+| BINEESHA |
+| AYISHA   |
+| ARON     |
+| ALICE    |
++----------+
+10 rows in set (0.00 sec)
+
+
+6.Display the customer details sorted in ascending by city and descending by names. 
+mysql> select name, city, address from Customer order by city asc, name desc;
++----------+----------+-----------------+
+| name     | city     | address         |
++----------+----------+-----------------+
+| MASOOD   | EKM      | TARAYILL HOUSE  |
+| BINEESHA | kannur   | rose villa      |
+| SHAHMA   | KZD      | PARAMMEL HOUSE  |
+| AYISHA   | THRISSUR | ATHANNI HOUSE   |
+| IZZAH    | TVM      | MANURAYIL HOUSE |
+| HAMNNA   | TVM      | TARAMMAL HOUSE  |
+| BOB      | TVM      | GREAT TREAT     |
+| ALICE    | TVM      | SWEET HOME      |
+| CHARLIE  | UK       | BOUGAINVILLEA   |
+| ARON     | USA      | HEAVEN          |
++----------+----------+-----------------+
+10 rows in set (0.01 sec)
+
+
+7. Find the customer names who have ‘e’ or ‘a’ in them and at least 3 characters in length
+mysql> select name FROM Customer where (name like '%E%' OR name LIKE '%A%') and length(name) >= 3;
+mysql> select name FROM Customer where (name like '%E%' OR name LIKE '%A%') and length(name) >= 3;
++----------+
+| name     |
++----------+
+| SHAHMA   |
+| BINEESHA |
+| MASOOD   |
+| IZZAH    |
+| AYISHA   |
+| HAMNNA   |
+| CHARLIE  |
+| ARON     |
+| ALICE    |
++----------+
+9 rows in set (0.00 sec)
+
+
+8. List the names of customers their names have ‘r’ in second position.
+mysql> select name from Customer where name like '_R%';
++------+
+| name |
++------+
+| ARON |
++------+
+1 row in set (0.00 sec)
+
+
+
+b) OPTIMIZING DATABASE:  (GROUP BY, AGGREGATE FUNCTIONS)
+1.    List product name, price except soap on price order.
+mysql> select*from Product;
++------+--------+-------+
+| p_id | pname  | price |
++------+--------+-------+
+|  101 | pen    |    94 |
+|  102 | pencil |    53 |
+|  103 | book   |    84 |
+|  104 | glue   |   104 |
+|  105 | soap   |   143 |
++------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select pname,price from Product where pname not like '%soap' order by price;
++--------+-------+
+| pname  | price |
++--------+-------+
+| pencil |    53 |
+| book   |    84 |
+| pen    |    94 |
+| glue   |   104 |
++--------+-------+
+4 rows in set (0.00 sec)
+
+2.    Find minimum, maximum and average price of products.
+mysql> select min(price) as min_price, max(price) as max_price,avg(price) as avg_price from Product;
++-----------+-----------+-----------+
+| min_price | max_price | avg_price |
++-----------+-----------+-----------+
+|        53 |       143 |   95.6000 |
++-----------+-----------+-----------+
+1 row in set (0.01 sec)
+
+3.    Find number of customers in each city.
+mysql> select city,count(id) as num_cus from Customer group by city;
+mysql> select city,count(id) as num_cus from Customer group by city;
++----------+---------+
+| city     | num_cus |
++----------+---------+
+| KZD      |       1 |
+| kannur   |       1 |
+| EKM      |       1 |
+| TVM      |       4 |
+| THRISSUR |       1 |
+| UK       |       1 |
+| USA      |       1 |
++----------+---------+
+7 rows in set (0.00 sec)
+
+
+4. Find number of customers in each city, only include city with more than 3 customers.
+mysql> select city,count(id) as num_cus from Customer group by city having count(id)>3;
++------+---------+
+| city | num_cus |
++------+---------+
+| TVM  |       4 |
++------+---------+
+1 row in set (0.00 sec)
+
+
+5. Show data as displayed ‘who, where’ Eg: ‘customer1 lives in ekm’
+mysql> select concat(name,' LIVES IN ',city) as who_where from Customer;
++--------------------------+
+| who_where                |
++--------------------------+
+| SHAHMA LIVES IN KZD      |
+| BINEESHA LIVES IN kannur |
+| MASOOD LIVES IN EKM      |
+| IZZAH LIVES IN TVM       |
+| AYISHA LIVES IN THRISSUR |
+| HAMNNA LIVES IN TVM      |
+| CHARLIE LIVES IN UK      |
+| ARON LIVES IN USA        |
+| ALICE LIVES IN TVM       |
+| BOB LIVES IN TVM         |
++--------------------------+
+10 rows in set (0.00 sec)
+
+
