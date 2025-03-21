@@ -62,4 +62,5 @@ mysql> select Customer.name FROM Customer, invoice_master, invoice_item where Cu
 +----------+
 1 row in set (0.00 sec)
 
-
+//RESUMBIT
+//6TH ONE NOT A SUBQUERY
