@@ -54,13 +54,13 @@ mysql>select Product.p_id, Product.pname, Product.price, invoice_item.quality fr
 
 
 6. List the names of all customers who have purchased at least 2 products, make sure that no duplicate names in the result.
-mysql> select Customer.name FROM Customer, invoice_master, invoice_item where Customer.id = invoice_master.c_id AND invoice_master.inv_id = invoice_item.inv_id group by Customer.name having count(DISTINCT invoice_item.p_id) >= 2;
+mysql>select Customer.name from Customer where Customer.id IN (select invoice_master.c_id from invoice_master where invoice_master.inv_id IN (select invoice_item.inv_id from invoice_itemwhere invoice_item.p_id IN ( select DISTINCT p_id from invoice_item where invoice_item.inv_id = invoice_master.inv_id)) AND (select COUNT(DISTINCT p_id) from invoice_item where invoice_item.inv_id = invoice_master.inv_id) >= 2);
 +----------+
 | name     |
 +----------+
 | BINEESHA |
 +----------+
-1 row in set (0.00 sec)
+1 row in set (0.01 sec)
 
 //RESUMBIT
 //6TH ONE NOT A SUBQUERY
