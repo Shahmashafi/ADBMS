@@ -64,3 +64,4 @@ mysql>select Customer.name from Customer where Customer.id IN (select invoice_ma
 
 //RESUMBIT
 //6TH ONE NOT A SUBQUERY
+//VERIFIED
