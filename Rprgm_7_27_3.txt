@@ -102,3 +102,4 @@ mysql>select pname from Product where exists (select 1 from invoice_item where i
 +-------+
 1 row in set (0.00 sec)
 
+//PART B?
