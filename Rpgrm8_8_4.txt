@@ -1,0 +1,104 @@
+PL/SQL PROGRAMS- STORED procedureS
+
+1. create a procedure to display all tables in the invoice database. 
+mysql> create procedure show_data()
+    -> begin
+    ->     select * from Customer;
+    ->     select * from Product;
+    ->     select * from invoice_master;
+    ->     select * from invoice_item;
+    -> end //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> call show_data();
++-------+----------+-----------------+--------+------------+
+| id    | name     | address         | city   | ph_no      |
++-------+----------+-----------------+--------+------------+
+| 10001 | SHAHMA   | PARAMMEL HOUSE  | KZD    | 9846561072 |
+| 10002 | BINEESHA | rose villa      | kannur | 9876754345 |
+| 10003 | MasOOD   | TARAYILL HOUSE  | EKM    | 9234541074 |
+| 10004 | IZZAH    | MANURAYIL HOUSE | TVM    | 9236561072 |
+| 10005 | AYISHA   | ATHANNI HOUSE   | CLT    | NULL       |
+| 10006 | HAMNNA   | TARAMMAL HOUSE  | TVM    | NULL       |
+| 10007 | CHARLIE  | BOUGAINVILLEA   | UK     | 8712561072 |
+| 10008 | ARON     | HEAVEN          | USA    | 9546120076 |
+| 10009 | ALICE    | SWEET HOME      | TVM    | 8965430076 |
+| 10010 | BOB      | GREAT TREAT     | TVM    | 9076342516 |
++-------+----------+-----------------+--------+------------+
+10 rows in set (0.00 sec)
+
++------+--------+-------+
+| p_id | pname  | price |
++------+--------+-------+
+|  101 | pen    |    94 |
+|  102 | pencil |    53 |
+|  103 | book   |    84 |
+|  104 | glue   |   104 |
+|  105 | soap   |   143 |
++------+--------+-------+
+5 rows in set (0.00 sec)
+
++--------+-------+------------+
+| inv_id | c_id  | inv_date   |
++--------+-------+------------+
+|     11 | 10001 | 2001-10-30 |
+|     12 | 10002 | 2025-02-27 |
+|     13 | 10003 | 2023-05-12 |
+|     15 | 10001 | 2025-03-18 |
++--------+-------+------------+
+4 rows in set (0.00 sec)
+
++--------+------+---------+
+| inv_id | p_id | quality |
++--------+------+---------+
+|     13 |  105 |       3 |
+|     12 |  102 |       7 |
+|     11 |  102 |       8 |
+|     12 |  104 |       5 |
+|     15 |  101 |       2 |
++--------+------+---------+
+5 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+2.create a procedure to find greatest of 2 numbers
+mysql> DELIMITER //
+mysql> create procedure find_greatest(num1 int, num2 int)
+    -> begin
+    ->     if num1 > num2 then
+    ->         select num1 as greatest;
+    ->     else
+    ->         select num2 as greatest;
+    ->     end if;
+    -> end //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER ;
++----------+
+| greatest |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+3.Create a procedure to display invoice details of a particular customer.
+mysql> create procedure data(in v1 varchar(10)) select II.* from invoice_item II inner join invoice_master IM on IM.inv_id=II.inv_id inner join Customer C on IM.c_id=C.id where C.name=v1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call data('SHAHMA');
++--------+------+---------+
+| inv_id | p_id | quality |
++--------+------+---------+
+|     11 |  102 |       8 |
+|     15 |  101 |       2 |
++--------+------+---------+
+2 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
