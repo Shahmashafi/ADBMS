@@ -1,0 +1,81 @@
+1.Create a trigger to handle updates to the customer table.
+
+mysql> delimiter $
+mysql> create trigger c_upd
+    ->     after update on Customer
+    ->     for each row begin
+    ->     insert into Cust set id=new.id,name=new.name,address=new.address,city=new.city,ph_no=new.ph_no;
+    ->     end$
+Query OK, 0 rows affected (0.00 sec)
+
+
+mysql> create table Cust(id int,name varchar(10),address varchar(20),city varchar(10),ph_no int) $
+Query OK, 0 rows affected (0.01 sec)
+
+
+
+mysql> select * from Customer $
++-------+----------+-----------------+--------+------------+
+| id    | name     | address         | city   | ph_no      |
++-------+----------+-----------------+--------+------------+
+| 10001 | SHAHMA   | PARAMMEL HOUSE  | KZD    | 9846561072 |
+| 10002 | BINEESHA | rose villa      | kannur | 9876754345 |
+| 10003 | MASOOD   | TARAYILL HOUSE  | EKM    | 9234541074 |
+| 10004 | IZZAH    | MANURAYIL HOUSE | TVM    | 9236561072 |
+| 10005 | AYISHA   | ATHANNI HOUSE   | CLT    | NULL       |
+| 10006 | HAMNNA   | TARAMMAL HOUSE  | TVM    | NULL       |
+| 10007 | CHARLIE  | BOUGAINVILLEA   | UK     | 8712561072 |
+| 10008 | ARON     | HEAVEN          | USA    | 9546120076 |
+| 10009 | ALICE    | SWEET HOME      | TVM    | 8965430076 |
+| 10010 | BOB      | GREAT TREAT     | TVM    | 9076342516 |
++-------+----------+-----------------+--------+------------+
+10 rows in set (0.00 sec)
+
+
+mysql> update Customer set city='kozhikode' where id='10003' $
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Cust;
++-------+--------+----------------+-----------+------------+
+| id    | name   | address        | city      | ph_no      |
++-------+--------+----------------+-----------+------------+
+| 10003 | MASOOD | TARAYILL HOUSE | kozhikode | 9234541074 |
+| 10003 | MASOOD | TARAYILL HOUSE | EKM       | 9234541074 |
+| 10003 | MASOOD | TARAYILL HOUSE | EKM       | 9234541074 |
+| 10003 | MASOOD | TARAYILL HOUSE | EKM       | 9234541074 |
+| 10003 | MASOOD | TARAYILL HOUSE | kozhikode | 9234541074 |
++-------+--------+----------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+
+
+2.Create a trigger to handle inserts to the product relation ( if price < 5 the set price to 10).
+
+mysql>delimiter //
+mysql>  create trigger p_ins
+    -> before insert on Product
+    -> for each row begin
+    -> if new.price <5 then
+    -> set new.price=10;
+    -> end if; end//
+Query OK, 0 rows affected (0.12 sec)
+
+
+mysql>  insert into Product values( 106, 'eraser', 4) //
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Product//
++------+--------+-------+
+| p_id | pname  | price |
++------+--------+-------+
+|  101 | pen    |    94 |
+|  102 | pencil |    53 |
+|  103 | book   |    84 |
+|  104 | glue   |   104 |
+|  105 | soap   |   143 |
+|  106 | eraser |    10 |
++------+--------+-------+
+6 rows in set (0.00 sec)
+
+
