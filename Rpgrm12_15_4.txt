@@ -1,0 +1,79 @@
+1. Write a MongoDB query to create an INVOICE database and collections (CUSTOMER, PRODUCT) and its corresponding documents.
+  test> use invoice
+  switched to db invoice
+  invoice> db.CUSTOMER.insertMany([
+    {customer_id: 1,name: "John Doe",city: "New York",email: "john@example.com"}, 
+    {customer_id: 2, name: "Jane Smith", city: "Calicut",email: "jane@example.com"}
+    ]);
+  {
+    acknowledged: true,
+    insertedIds: {
+      '0': ObjectId('67fe26fe90891dca41d861e0'),
+      '1': ObjectId('67fe26fe90891dca41d861e1')
+    }
+  }
+  invoice> db.PRODUCT.insertMany([
+    { product_id: 101, name: "Laptop", price: 1200 },
+    { product_id: 102, name: "Mouse", price: 25 }
+    ]);
+
+  {
+    acknowledged: true,
+    insertedIds: {
+      '0': ObjectId('67fe273a90891dca41d861e2'),
+      '1': ObjectId('67fe273a90891dca41d861e3')
+    }
+  }
+
+
+
+2.Write a MongoDB query to find all documents from the collection CUSTOMER 
+  invoice> db.CUSTOMER.find()
+  [
+    {
+      _id: ObjectId('67fe26fe90891dca41d861e0'),
+      customer_id: 1,
+      name: 'John Doe',
+      city: 'New York',
+      email: 'john@example.com'
+    },
+    {
+      _id: ObjectId('67fe26fe90891dca41d861e1'),
+      customer_id: 2,
+      name: 'Jane Smith',
+      city: 'Calicut',
+      email: 'jane@example.com'
+    }
+  ]
+
+
+
+3.Write a MongoDB query to update the city in the collection CUSTOMER.
+  invoice> db.CUSTOMER.updateOne(
+   { customer_id: 1 },
+   { $set: { city: "Los Angeles" } })
+  {
+    acknowledged: true,
+    insertedId: null,
+    matchedCount: 1,
+    modifiedCount: 1,
+    upsertedCount: 0
+  }
+
+  invoice> db.CUSTOMER.find({customer_id:1}).pretty()
+  [
+    {
+      _id: ObjectId('67fe26fe90891dca41d861e0'),
+      customer_id: 1,
+      name: 'John Doe',
+      city: 'Los Angeles',
+      email: 'john@example.com'
+    }
+  ]
+
+
+
+4.Write a MongoDB query to delete the first matched document whose city is “Calicut”
+invoice> db.CUSTOMER.deleteOne({ city: "Calicut" })
+{ acknowledged: true, deletedCount: 1 }
+
