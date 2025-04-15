@@ -1,0 +1,73 @@
+  1.Write a MongoDB query to display the customer documents having city ‘ekm’,’tvm’.
+  invoice> db.CUSTOMER.insertMany([
+   { customer_id: 2, name: "Sariga Das", city: "ekm", email: "sarigadas121@example.com" },
+   { customer_id: 3, name: "Radhika", city: "Calicut", email: "radhika@example.com" },
+   { customer_id: 4, name: "Rachel", city: "tvm", email: "rachel@example.com" }
+  ]); 
+  {
+    acknowledged: true,
+    insertedIds: {
+      '0': ObjectId('67fe309e90891dca41d861e4'),
+      '1': ObjectId('67fe309e90891dca41d861e5'),
+      '2': ObjectId('67fe309e90891dca41d861e6')
+    }
+  }
+  invoice> db.CUSTOMER.find({$or: [{ city: "ekm" },{ city: "tvm" }]})
+  [
+    {
+      _id: ObjectId('67fe309e90891dca41d861e4'),
+      customer_id: 2,
+      name: 'Sariga Das',
+      city: 'ekm',
+      email: 'sarigadas121@example.com'
+    },
+    {
+      _id: ObjectId('67fe309e90891dca41d861e6'),
+      customer_id: 4,
+      name: 'Rachel',
+      city: 'tvm',
+      email: 'rachel@example.com'
+    }
+  ]
+
+
+
+2.Write a MongoDB query to display all product documents their price >50.
+  invoice> db.PRODUCT.find({ price: { $gt: 50 } })
+  [
+    {
+      _id: ObjectId('67fe273a90891dca41d861e2'),
+      product_id: 101,
+      name: 'Laptop',
+      price: 1200
+    }
+  ]
+
+
+
+3.Write a MongoDB query to find customer documents who not live in ‘tvm’.
+  invoice> db.CUSTOMER.find({ city: { $ne: "tvm" } })
+  [
+    {
+      _id: ObjectId('67fe26fe90891dca41d861e0'),
+      customer_id: 1,
+      name: 'John Doe',
+      city: 'Los Angeles',
+      email: 'john@example.com'
+    },
+    {
+      _id: ObjectId('67fe309e90891dca41d861e4'),
+      customer_id: 2,
+      name: 'Sariga Das',
+      city: 'ekm',
+      email: 'sarigadas121@example.com'
+    },
+    {
+      _id: ObjectId('67fe309e90891dca41d861e5'),
+      customer_id: 3,
+      name: 'Radhika',
+      city: 'Calicut',
+      email: 'radhika@example.com'
+    }
+  ]
+
