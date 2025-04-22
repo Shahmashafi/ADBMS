@@ -1,0 +1,51 @@
+1.Write a MongoDB query to create a user “CUSTOMER1” and grant the read role in the INVOICE database.
+ invoice>     db.createUser({
+    user: "CUSTOMER1",
+    pwd: "Cust_pass@123", 
+    roles: [{ role: "read", db: "INVOICE" }]
+  });
+  { ok: 1 }
+ invoice> show users
+  [
+    {
+      _id: 'invoice.CUSTOMER1',
+      userId: UUID('f61dfa88-30d3-44f4-9886-1102ebef1b39'),
+      user: 'CUSTOMER1',
+      db: 'invoice',
+      roles: [ { role: 'read', db: 'INVOICE' } ],
+      mechanisms: [ 'SCRAM-SHA-1', 'SCRAM-SHA-256' ]
+    }
+  ]
+
+  
+2.Write a MongoDB query to create the backup for the INVOICE database.
+  ksb@ksb-H410M-H-V2:~$ mongodump --db=invoice --out=/home/ksb/shahma/s2/DBMS/mongodb
+  2025-04-22T15:17:42.485+0530	writing invoice.PRODUCT to /home/ksb/shahma/s2/DBMS/mongodb/invoice/PRODUCT.bson
+  2025-04-22T15:17:42.485+0530	done dumping invoice.PRODUCT (4 documents)
+  2025-04-22T15:17:42.486+0530	writing invoice.CUSTOMER to /home/ksb/shahma/s2/DBMS/mongodb/invoice/CUSTOMER.bson
+  2025-04-22T15:17:42.487+0530	done dumping invoice.CUSTOMER (8 documents)
+
+
+3.Write a MongoDB query to restore a particular database or a collection.
+  ksb@ksb-H410M-H-V2:~$ mongorestore --drop  --db=invoice --collection=CUSTOMER /home/ksb/shahma/s2/DBMS/mongodb/invoice/CUSTOMER.bson
+  2025-04-22T15:36:16.691+0530	checking for collection data in /home/ksb/shahma/s2/DBMS/mongodb/invoice/CUSTOMER.bson
+  2025-04-22T15:36:16.691+0530	reading metadata for invoice.CUSTOMER from /home/ksb/shahma/s2/DBMS/mongodb/invoice/CUSTOMER.metadata.json
+  2025-04-22T15:36:16.691+0530	dropping collection invoice.CUSTOMER before restoring
+  2025-04-22T15:36:16.699+0530	restoring invoice.CUSTOMER from /home/ksb/shahma/s2/DBMS/mongodb/invoice/CUSTOMER.bson
+  2025-04-22T15:36:16.741+0530	finished restoring invoice.CUSTOMER (8 documents, 0 failures)
+  2025-04-22T15:36:16.741+0530	no indexes to restore for collection invoice.CUSTOMER
+  2025-04-22T15:36:16.741+0530	8 document(s) restored successfully. 0 document(s) failed to restore.
+
+
+4. Write a MongoDB query to create an index for the collection customer using the field customer_name.
+invoice> db.CUSTOMER.createIndex({name:1})
+name_1
+
+invoice> db.CUSTOMER.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'name_1' }
+]
+
+
+
