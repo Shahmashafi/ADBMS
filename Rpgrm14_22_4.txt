@@ -116,3 +116,4 @@
     { customer_name: 'Rachel', product_name: 'CPU', price: 2500 }
   ]
 
+//VERIFIED
